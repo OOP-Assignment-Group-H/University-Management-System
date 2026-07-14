@@ -2,6 +2,9 @@ package admin;
 import admin.LecturerPanel;
 import admin.ProfileDialog;
 import admin.StudentPanel;
+import admin.CoursePanel;
+import admin.DepartmentPanel;
+import admin.DegreePanel;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -21,7 +24,11 @@ public class AdminDashboard extends JFrame implements ActionListener {
     // Content area (panels are swapped inside this)
     private JPanel contentPanel;
 
+    // Logged-in user (needed to rebuild the welcome panel)
+    private String username;
+
     // Sidebar buttons
+    private JButton btnDashboard;
     private JButton btnStudents;
     private JButton btnLecturers;
     private JButton btnCourses;
@@ -37,6 +44,8 @@ public class AdminDashboard extends JFrame implements ActionListener {
 
     //  CONSTRUCTOR
     public AdminDashboard(String username) {
+        this.username = username;
+
         setTitle("University Management System - Admin Dashboard");
         setSize(1100, 700);
         setMinimumSize(new Dimension(900, 600));
@@ -47,9 +56,9 @@ public class AdminDashboard extends JFrame implements ActionListener {
         add(buildSidebar(),  BorderLayout.WEST);
         add(buildMainArea(), BorderLayout.CENTER);
 
-
-        showContent(new StudentPanel());
-        setActiveButton(btnStudents);
+        // Show the welcome panel first, with the Dashboard button highlighted
+        showContent(new WelcomePanel(username));
+        setActiveButton(btnDashboard);
     }
 
 
@@ -61,7 +70,11 @@ public class AdminDashboard extends JFrame implements ActionListener {
         sidebar.setBackground(SIDEBAR_BG);
 
         // Logo
-        JLabel logo = new JLabel("UOK - FCT");
+        JLabel logo = new JLabel(
+                "<html><div style='text-align:center; width:150px;'>"
+                        + "Faculty Of Computing &amp; Technology"
+                        + "</div></html>"
+        );
         logo.setFont(new Font("Arial", Font.BOLD, 20));
         logo.setForeground(Color.WHITE);
         logo.setHorizontalAlignment(SwingConstants.CENTER);
@@ -74,12 +87,14 @@ public class AdminDashboard extends JFrame implements ActionListener {
         menu.setLayout(new BoxLayout(menu, BoxLayout.Y_AXIS));
         menu.setBorder(new EmptyBorder(10, 12, 10, 12));
 
+        btnDashboard   = makeSidebarBtn("  Dashboard");
         btnStudents    = makeSidebarBtn("  Students");
         btnLecturers   = makeSidebarBtn("  Lecturers");
         btnCourses     = makeSidebarBtn("  Courses");
         btnDepartments = makeSidebarBtn("  Departments");
         btnDegrees     = makeSidebarBtn("  Degrees");
 
+        menu.add(btnDashboard);   menu.add(Box.createVerticalStrut(6));
         menu.add(btnStudents);    menu.add(Box.createVerticalStrut(6));
         menu.add(btnLecturers);   menu.add(Box.createVerticalStrut(6));
         menu.add(btnCourses);     menu.add(Box.createVerticalStrut(6));
@@ -207,6 +222,12 @@ public class AdminDashboard extends JFrame implements ActionListener {
 
 
 
+        // Dashboard - WelcomePanel
+        else if (e.getSource() == btnDashboard) {
+            showContent(new WelcomePanel(username));
+            setActiveButton(btnDashboard);
+        }
+
         // Students -StudentPanel
         else if (e.getSource() == btnStudents) {
             showContent(new StudentPanel());
@@ -219,21 +240,21 @@ public class AdminDashboard extends JFrame implements ActionListener {
             setActiveButton(btnLecturers);
         }
 
-        // Courses-CoursePanel  🔲
+        // Courses - CoursePanel
         else if (e.getSource() == btnCourses) {
-            // showContent(new CoursePanel());
+            showContent(new CoursePanel());
             setActiveButton(btnCourses);
         }
 
-        // Departments-DepartmentPanel  🔲
+        // Departments - DepartmentPanel
         else if (e.getSource() == btnDepartments) {
-            // showContent(new DepartmentPanel());
+            showContent(new DepartmentPanel());
             setActiveButton(btnDepartments);
         }
 
-        // ── Degrees  →  DegreePanel  🔲
+        // Degrees - DegreePanel
         else if (e.getSource() == btnDegrees) {
-            // showContent(new DegreePanel());
+            showContent(new DegreePanel());
             setActiveButton(btnDegrees);
         }
     }

@@ -450,7 +450,7 @@ public class MyFrame extends JFrame implements ActionListener {
     private String checkLogin(String usernameOrEmail, String password) {
         String sql = "SELECT password, role FROM users WHERE username = ? OR email = ?";
 
-        try (java.sql.Connection conn = db.DBConnection.getConnection();
+        try (java.sql.Connection conn = DB.DBConnection.getConnection();
              java.sql.PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setString(1, usernameOrEmail);
