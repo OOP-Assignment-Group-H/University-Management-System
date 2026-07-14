@@ -322,7 +322,7 @@ public class SignUpForm extends JFrame {
         // ---------------- Save to database ----------------
         String sql = "INSERT INTO users (full_name, username, email, password, role) VALUES (?, ?, ?, ?, ?)";
 
-        try (java.sql.Connection conn = db.DBConnection.getConnection();
+        try (java.sql.Connection conn = DB.DBConnection.getConnection();
              java.sql.PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setString(1, fullName);
