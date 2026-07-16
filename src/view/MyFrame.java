@@ -1,6 +1,7 @@
 package view;
 
 import admin.AdminDashboard;
+import lecturer.LecturerPortal;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -506,8 +507,8 @@ public class MyFrame extends JFrame implements ActionListener {
                         // TODO: new StudentDashboard(username).setVisible(true);
                         break;
                     case "lecturer":
-                        JOptionPane.showMessageDialog(this, "Login successful - opening Lecturer dashboard.");
-                        // TODO: new LecturerDashboard(username).setVisible(true);
+                        SwingUtilities.invokeLater(() -> new LecturerPortal().setVisible(true));
+                        this.dispose();
                         break;
                     case "admin":
                         SwingUtilities.invokeLater(() -> new AdminDashboard(username).setVisible(true));
