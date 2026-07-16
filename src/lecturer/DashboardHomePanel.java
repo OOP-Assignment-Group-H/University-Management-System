@@ -89,7 +89,7 @@ public class DashboardHomePanel extends JPanel {
         return new RoundedImagePanel(campusImage, 18);
     }
 
-
+    /** Rounded-corner panel that scales and clips an image to fill its bounds. */
     private static class RoundedImagePanel extends JPanel {
         private final Image image;
         private final int radius;

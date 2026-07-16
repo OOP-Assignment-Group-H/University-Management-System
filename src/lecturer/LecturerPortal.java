@@ -5,7 +5,11 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.io.File;
 
-
+/**
+ * Main window for the Lecturer Portal.
+ * Holds the sidebar navigation, the top header bar, and a CardLayout
+ * content area that swaps between the different feature panels.
+ */
 public class LecturerPortal extends JFrame {
 
     public static final Color MAROON = new Color(123, 17, 19);
@@ -58,7 +62,10 @@ public class LecturerPortal extends JFrame {
         contentPanel.add(new LecturerProfilePanel(this::updateSidebarPhoto), "PROFILE");
         contentPanel.add(new CoursesPanel(), "COURSES");
         contentPanel.add(new TimeTablePanel(), "TIMETABLE");
-
+        contentPanel.add(new StudentPanel(), "CLASSLIST");
+        contentPanel.add(new AssignmentPanel(), "ASSIGNMENTS");
+        contentPanel.add(new GradePanel(), "GRADES");
+        contentPanel.add(new CalendarPanel(), "CALENDAR");
 
         rightSide.add(contentPanel, BorderLayout.CENTER);
         add(rightSide, BorderLayout.CENTER);
@@ -84,7 +91,11 @@ public class LecturerPortal extends JFrame {
                 {"Dashboard", "DASHBOARD"},
                 {"Profile", "PROFILE"},
                 {"Courses", "COURSES"},
-                {"Timetable", "TIMETABLE"}
+                {"Timetable", "TIMETABLE"},
+                {"Class List & Students", "CLASSLIST"},
+                {"Assignments & Quizzes", "ASSIGNMENTS"},
+                {"Grades", "GRADES"},
+                {"Calendar", "CALENDAR"}
         };
 
         for (String[] item : items) {
