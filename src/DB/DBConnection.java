@@ -6,11 +6,16 @@ import java.sql.SQLException;
 
 public class DBConnection {
 
-    private static final String URL = "JDBC:mysql://localhost:3306/ums_db";
+    private static final String URL = "jdbc:mysql://localhost:3306/university_db?useSSL=false&serverTimezone=UTC";
     private static final String USER = "root";
     private static final String PASSWORD = ""; // <-- change this to your real MySQL password
 
     public static Connection getConnection() throws SQLException {
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+        } catch (ClassNotFoundException e) {
+            throw new SQLException("MySQL JDBC driver not found on classpath. Add mysql-connector-j to your project.", e);
+        }
         return DriverManager.getConnection(URL, USER, PASSWORD);
     }
 
