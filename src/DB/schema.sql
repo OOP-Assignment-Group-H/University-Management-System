@@ -1,3 +1,62 @@
+-- =====================================================================
+-- University Management System — schema.sql
+-- =====================================================================
+-- Structure-only file, generated from your live faculty_management_system
+-- database (confirms the merge with newdb imported successfully — all
+-- 16 tables present, including courses_enrolled and timetable, and the
+-- extended students/users columns).
+--
+-- Run this on an empty database, then run sample_data.sql.
+-- =====================================================================
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET FOREIGN_KEY_CHECKS = 0;
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+CREATE DATABASE IF NOT EXISTS `faculty_management_system`
+  DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+USE `faculty_management_system`;
+
+DROP TABLE IF EXISTS `courses_enrolled`;
+DROP TABLE IF EXISTS `timetable`;
+DROP TABLE IF EXISTS `submissions`;
+DROP TABLE IF EXISTS `assignments`;
+DROP TABLE IF EXISTS `materials`;
+DROP TABLE IF EXISTS `lecturer_timetable`;
+DROP TABLE IF EXISTS `student_timetable`;
+DROP TABLE IF EXISTS `enrollments`;
+DROP TABLE IF EXISTS `course_sections`;
+DROP TABLE IF EXISTS `courses`;
+DROP TABLE IF EXISTS `students`;
+DROP TABLE IF EXISTS `lecturers`;
+DROP TABLE IF EXISTS `admins`;
+DROP TABLE IF EXISTS `degrees`;
+DROP TABLE IF EXISTS `departments`;
+DROP TABLE IF EXISTS `users`;
+
+-- Database: `faculty_management_system`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `admins`
+--
+
+CREATE TABLE `admins` (
+  `admin_id` varchar(10) NOT NULL,
+  `full_name` varchar(100) DEFAULT NULL,
+  `email` varchar(100) DEFAULT NULL,
+  `mobile` varchar(15) DEFAULT NULL,
+  `user_id` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `assignments`
+--
 
 CREATE TABLE `assignments` (
   `assignment_id` int(11) NOT NULL,
@@ -14,6 +73,7 @@ CREATE TABLE `assignments` (
 --
 -- Table structure for table `courses`
 --
+
 CREATE TABLE `courses` (
   `course_id` int(11) NOT NULL,
   `course_code` varchar(20) DEFAULT NULL,
@@ -28,8 +88,24 @@ CREATE TABLE `courses` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `courses_enrolled`
+--
+
+CREATE TABLE `courses_enrolled` (
+  `id` int(11) NOT NULL,
+  `student_id` varchar(20) NOT NULL,
+  `course_code` varchar(20) NOT NULL,
+  `course_name` varchar(150) NOT NULL,
+  `grade` varchar(10) DEFAULT NULL,
+  `gpa` decimal(3,2) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `course_sections`
 --
+
 CREATE TABLE `course_sections` (
   `section_id` int(11) NOT NULL,
   `course_id` int(11) NOT NULL,
@@ -42,6 +118,7 @@ CREATE TABLE `course_sections` (
 --
 -- Table structure for table `degrees`
 --
+
 CREATE TABLE `degrees` (
   `degree_id` int(11) NOT NULL,
   `degree_name` varchar(100) DEFAULT NULL,
@@ -53,6 +130,7 @@ CREATE TABLE `degrees` (
 --
 -- Table structure for table `departments`
 --
+
 CREATE TABLE `departments` (
   `department_id` int(11) NOT NULL,
   `department_name` varchar(100) DEFAULT NULL,
@@ -65,6 +143,7 @@ CREATE TABLE `departments` (
 --
 -- Table structure for table `enrollments`
 --
+
 CREATE TABLE `enrollments` (
   `enrollment_id` int(11) NOT NULL,
   `student_id` varchar(20) DEFAULT NULL,
@@ -77,6 +156,7 @@ CREATE TABLE `enrollments` (
 --
 -- Table structure for table `lecturers`
 --
+
 CREATE TABLE `lecturers` (
   `lecturer_id` varchar(10) NOT NULL,
   `full_name` varchar(100) DEFAULT NULL,
@@ -91,6 +171,7 @@ CREATE TABLE `lecturers` (
 --
 -- Table structure for table `lecturer_timetable`
 --
+
 CREATE TABLE `lecturer_timetable` (
   `timetable_id` int(11) NOT NULL,
   `lecturer_id` varchar(10) NOT NULL,
@@ -106,6 +187,7 @@ CREATE TABLE `lecturer_timetable` (
 --
 -- Table structure for table `materials`
 --
+
 CREATE TABLE `materials` (
   `material_id` int(11) NOT NULL,
   `course_id` int(11) NOT NULL,
@@ -123,11 +205,16 @@ CREATE TABLE `materials` (
 --
 -- Table structure for table `students`
 --
+
 CREATE TABLE `students` (
   `student_id` varchar(20) NOT NULL,
   `full_name` varchar(100) DEFAULT NULL,
   `email` varchar(100) DEFAULT NULL,
   `mobile` varchar(15) DEFAULT NULL,
+  `dob` date DEFAULT NULL,
+  `degree_program` varchar(150) DEFAULT NULL,
+  `status` varchar(20) DEFAULT 'Active',
+  `batch` varchar(20) DEFAULT NULL,
   `degree_id` int(11) DEFAULT NULL,
   `user_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -137,6 +224,7 @@ CREATE TABLE `students` (
 --
 -- Table structure for table `student_timetable`
 --
+
 CREATE TABLE `student_timetable` (
   `timetable_id` int(11) NOT NULL,
   `degree_id` int(11) NOT NULL,
@@ -153,6 +241,7 @@ CREATE TABLE `student_timetable` (
 --
 -- Table structure for table `submissions`
 --
+
 CREATE TABLE `submissions` (
   `submission_id` int(11) NOT NULL,
   `course_id` int(11) NOT NULL,
@@ -166,18 +255,43 @@ CREATE TABLE `submissions` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `timetable`
+--
+
+CREATE TABLE `timetable` (
+  `id` int(11) NOT NULL,
+  `batch` varchar(20) DEFAULT NULL,
+  `time_slot` varchar(20) DEFAULT NULL,
+  `day_of_week` varchar(10) DEFAULT NULL,
+  `course_code` varchar(20) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `users`
 --
+
 CREATE TABLE `users` (
   `user_id` int(11) NOT NULL,
   `username` varchar(50) NOT NULL,
   `password` varchar(255) NOT NULL,
-  `role` enum('Admin','Student','Lecturer') NOT NULL
+  `role` enum('Admin','Student','Lecturer') NOT NULL,
+  `student_id` varchar(20) DEFAULT NULL,
+  `full_name` varchar(100) DEFAULT NULL,
+  `email` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `admins`
+--
+ALTER TABLE `admins`
+  ADD PRIMARY KEY (`admin_id`),
+  ADD KEY `user_id` (`user_id`);
 
 --
 -- Indexes for table `assignments`
@@ -193,6 +307,13 @@ ALTER TABLE `assignments`
 ALTER TABLE `courses`
   ADD PRIMARY KEY (`course_id`),
   ADD KEY `lecturer_id` (`lecturer_id`);
+
+--
+-- Indexes for table `courses_enrolled`
+--
+ALTER TABLE `courses_enrolled`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `student_id` (`student_id`);
 
 --
 -- Indexes for table `course_sections`
@@ -272,11 +393,18 @@ ALTER TABLE `submissions`
   ADD KEY `fk_submissions_assignment` (`assignment_id`);
 
 --
+-- Indexes for table `timetable`
+--
+ALTER TABLE `timetable`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`user_id`),
-  ADD UNIQUE KEY `username` (`username`);
+  ADD UNIQUE KEY `username` (`username`),
+  ADD UNIQUE KEY `student_id` (`student_id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -295,10 +423,16 @@ ALTER TABLE `courses`
   MODIFY `course_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
+-- AUTO_INCREMENT for table `courses_enrolled`
+--
+ALTER TABLE `courses_enrolled`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+
+--
 -- AUTO_INCREMENT for table `course_sections`
 --
 ALTER TABLE `course_sections`
-  MODIFY `section_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `section_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT for table `degrees`
@@ -316,7 +450,7 @@ ALTER TABLE `departments`
 -- AUTO_INCREMENT for table `enrollments`
 --
 ALTER TABLE `enrollments`
-  MODIFY `enrollment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
+  MODIFY `enrollment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
 
 --
 -- AUTO_INCREMENT for table `lecturer_timetable`
@@ -340,17 +474,29 @@ ALTER TABLE `student_timetable`
 -- AUTO_INCREMENT for table `submissions`
 --
 ALTER TABLE `submissions`
-  MODIFY `submission_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `submission_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `timetable`
+--
+ALTER TABLE `timetable`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
 
 --
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `admins`
+--
+ALTER TABLE `admins`
+  ADD CONSTRAINT `admins_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`);
 
 --
 -- Constraints for table `assignments`
@@ -364,6 +510,12 @@ ALTER TABLE `assignments`
 --
 ALTER TABLE `courses`
   ADD CONSTRAINT `courses_ibfk_1` FOREIGN KEY (`lecturer_id`) REFERENCES `lecturers` (`lecturer_id`);
+
+--
+-- Constraints for table `courses_enrolled`
+--
+ALTER TABLE `courses_enrolled`
+  ADD CONSTRAINT `courses_enrolled_ibfk_1` FOREIGN KEY (`student_id`) REFERENCES `students` (`student_id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `course_sections`
@@ -426,4 +578,7 @@ ALTER TABLE `submissions`
   ADD CONSTRAINT `fk_submissions_assignment` FOREIGN KEY (`assignment_id`) REFERENCES `assignments` (`assignment_id`) ON DELETE SET NULL,
   ADD CONSTRAINT `submissions_ibfk_1` FOREIGN KEY (`course_id`) REFERENCES `courses` (`course_id`) ON DELETE CASCADE,
   ADD CONSTRAINT `submissions_ibfk_2` FOREIGN KEY (`student_id`) REFERENCES `students` (`student_id`) ON DELETE CASCADE;
+COMMIT;
 
+SET FOREIGN_KEY_CHECKS = 1;
+COMMIT;

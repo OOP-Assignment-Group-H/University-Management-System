@@ -63,7 +63,6 @@ public class DashboardApp extends JFrame {
         setLayout(new BorderLayout());
 
         contentPanel.add(buildDashboardPanel(), KEY_DASHBOARD);
-        //contentPanel.add(new student.Courses(), KEY_COURSES);
 
         String[] keys = {KEY_DASHBOARD, KEY_COURSES};
         String[] labels = {"Dashboard", "Courses"};
@@ -80,7 +79,20 @@ public class DashboardApp extends JFrame {
         loadStudentDetails();
     }
 
-    private void showSection(String key) { cardLayout.show(contentPanel, key); }
+    private void showSection(String key) {
+        if (KEY_COURSES.equals(key)) {
+            // CourseManagement is its own JFrame (not a JPanel), so it can't live in the
+            // CardLayout. Open it as a separate window and hide this one while it's open.
+            student.course.CourseManagement courseWindow =
+                    new student.course.CourseManagement(cachedStudentId, () -> {
+                        this.setVisible(true);
+                    });
+            courseWindow.setVisible(true);
+            this.setVisible(false);
+            return;
+        }
+        cardLayout.show(contentPanel, key);
+    }
     private void confirmLogout() { System.exit(0); }
 
     private JPanel buildTopBar() {
