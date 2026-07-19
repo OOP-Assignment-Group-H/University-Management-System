@@ -2,6 +2,7 @@ package view;
 
 import admin.AdminDashboard;
 import lecturer.LecturerPortal;
+import student.DashboardApp;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -502,10 +503,7 @@ public class MyFrame extends JFrame implements ActionListener {
                         "This account is not registered as a " + capitalize(selectedRole) + ".");
             } else {
                 switch (actualRole) {
-                    case "student":
-                        JOptionPane.showMessageDialog(this, "Login successful - opening Student dashboard.");
-                        // TODO: new StudentDashboard(username).setVisible(true);
-                        break;
+
                     case "lecturer":
                         SwingUtilities.invokeLater(() -> new LecturerPortal().setVisible(true));
                         this.dispose();
@@ -514,6 +512,11 @@ public class MyFrame extends JFrame implements ActionListener {
                         SwingUtilities.invokeLater(() -> new AdminDashboard(username).setVisible(true));
                         this.dispose();
                         break;
+                    case "student":
+                        SwingUtilities.invokeLater(() -> new DashboardApp(username).setVisible(true));
+                        this.dispose();
+                        break;
+
                 }
             }
         } else if (event.getSource() == signUpButton) {
