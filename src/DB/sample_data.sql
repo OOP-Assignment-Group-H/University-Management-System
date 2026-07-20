@@ -1,3 +1,25 @@
+-- =====================================================================
+-- University Management System — sample_data.sql
+-- =====================================================================
+-- Data-only file, generated from your live faculty_management_system
+-- database. Run schema.sql first, then this file, against an empty
+-- `faculty_management_system` database.
+-- =====================================================================
+
+USE `faculty_management_system`;
+SET FOREIGN_KEY_CHECKS = 0;
+
+
+--
+-- Dumping data for table `admins`
+--
+
+INSERT INTO `admins` (`admin_id`, `full_name`, `email`, `mobile`, `user_id`) VALUES
+('AD001', 'System Administrator', 'admin@kln.ac.lk', '0700000000', 39);
+
+--
+-- Dumping data for table `courses`
+--
 
 INSERT INTO `courses` (`course_id`, `course_code`, `course_name`, `category`, `banner_color`, `credits`, `lecturer_id`, `completed_pct`) VALUES
 (1, 'CTEC11052', 'Structured Programming I', 'General', '#5F7BC7', 2, 'LE001', 0),
@@ -25,8 +47,27 @@ INSERT INTO `courses` (`course_id`, `course_code`, `course_name`, `category`, `b
 (23, 'GTEC12033', 'Fundamental Practices in Technology', 'General', '#5F7BC7', 3, 'LE003', 0);
 
 --
+-- Dumping data for table `courses_enrolled`
+--
+
+INSERT INTO `courses_enrolled` (`id`, `student_id`, `course_code`, `course_name`, `grade`, `gpa`) VALUES
+(1, 'CT/2022/077', 'CTEC22061', 'Systems and Network Laboratory', 'A-', 3.70),
+(2, 'CT/2022/077', 'GTEC22033', 'Mathematics for Technology - IV', 'B+', 3.30),
+(3, 'CT/2022/077', 'CTEC22043', 'Object Oriented Programming', 'A', 4.00),
+(4, 'CT/2022/077', 'CTEC22032', 'Software Engineering', 'A-', 3.70),
+(5, 'CT/2022/077', 'CTEC22053', 'Computer Architecture & Operating Systems', 'B', 3.00),
+(6, 'CT/2022/077', 'GTEC23032', 'Projects in Technology - II', 'In Progres', NULL),
+(7, 'CT/2022/014', 'CTEC22061', 'Systems and Network Laboratory', 'B', 3.00),
+(8, 'CT/2022/014', 'GTEC22033', 'Mathematics for Technology - IV', 'B', 3.00),
+(9, 'CT/2022/014', 'CTEC22043', 'Object Oriented Programming', 'A-', 3.70),
+(10, 'CT/2022/014', 'CTEC22032', 'Software Engineering', 'A', 4.00),
+(11, 'CT/2022/014', 'CTEC22053', 'Computer Architecture & Operating Systems', 'B+', 3.30),
+(12, 'CT/2022/014', 'GTEC23032', 'Projects in Technology - II', 'In Progres', NULL);
+
+--
 -- Dumping data for table `course_sections`
 --
+
 INSERT INTO `course_sections` (`section_id`, `course_id`, `section_name`, `sort_order`) VALUES
 (1, 1, 'General', 0),
 (2, 5, 'General', 0),
@@ -55,6 +96,7 @@ INSERT INTO `course_sections` (`section_id`, `course_id`, `section_name`, `sort_
 --
 -- Dumping data for table `degrees`
 --
+
 INSERT INTO `degrees` (`degree_id`, `degree_name`, `department_id`) VALUES
 (1, 'Bachelor of Science Honours in Computer Science Degree', 1),
 (2, 'Bachelor of Information and Communication Technology Honours Degree', 2),
@@ -64,6 +106,7 @@ INSERT INTO `degrees` (`degree_id`, `degree_name`, `department_id`) VALUES
 --
 -- Dumping data for table `departments`
 --
+
 INSERT INTO `departments` (`department_id`, `department_name`, `hod`, `staff_count`) VALUES
 (1, 'Applied Computing', 'Dr. Laalitha S. I. Liyanage', 24),
 (2, 'Software Engineering', 'Dr. S. P. Kasthuri Arachchi', 23),
@@ -72,6 +115,7 @@ INSERT INTO `departments` (`department_id`, `department_name`, `hod`, `staff_cou
 --
 -- Dumping data for table `enrollments`
 --
+
 INSERT INTO `enrollments` (`enrollment_id`, `student_id`, `course_id`, `grade`) VALUES
 (1, 'CS2022001', 1, 'A'),
 (2, 'CS2022002', 2, 'A-'),
@@ -121,6 +165,7 @@ INSERT INTO `enrollments` (`enrollment_id`, `student_id`, `course_id`, `grade`) 
 --
 -- Dumping data for table `lecturers`
 --
+
 INSERT INTO `lecturers` (`lecturer_id`, `full_name`, `email`, `mobile`, `department_id`, `user_id`) VALUES
 ('LE001', 'Dr. Laalitha S. I. Liyanage', 'laalitha@kln.ac.lk', '0711234567', 3, 21),
 ('LE002', 'Dr. Chamli Pushpakumara', 'chamli@kln.ac.lk', '0722345678', 3, 22),
@@ -144,6 +189,7 @@ INSERT INTO `lecturers` (`lecturer_id`, `full_name`, `email`, `mobile`, `departm
 --
 -- Dumping data for table `lecturer_timetable`
 --
+
 INSERT INTO `lecturer_timetable` (`timetable_id`, `lecturer_id`, `course_id`, `day_of_week`, `start_time`, `end_time`, `venue`) VALUES
 (1, 'LE001', 1, 'Monday', '08:30:00', '10:30:00', 'LH-101'),
 (2, 'LE001', 5, 'Thursday', '08:30:00', '10:30:00', 'Lab-02'),
@@ -164,133 +210,139 @@ INSERT INTO `lecturer_timetable` (`timetable_id`, `lecturer_id`, `course_id`, `d
 --
 -- Dumping data for table `materials`
 --
+
 INSERT INTO `materials` (`material_id`, `course_id`, `section_id`, `title`, `type`, `file_path`, `uploaded_at`, `section_title`, `item_order`) VALUES
-(1, 1, NULL, 'CTEC11052 Outline', 'PDF', 'materials/course1_outline.pdf', '2026-07-13 11:20:48', 'Course Resources', 1),
-(2, 2, NULL, 'CTEC11063 Outline', 'PDF', 'materials/course2_outline.pdf', '2026-07-13 11:20:48', 'Course Resources', 1),
-(3, 3, NULL, 'CTEC11203 Outline', 'PDF', 'materials/course3_outline.pdf', '2026-07-13 11:20:48', 'Course Resources', 1),
-(4, 4, NULL, 'CTEC12052 Outline', 'PDF', 'materials/course4_outline.pdf', '2026-07-13 11:20:48', 'Course Resources', 1),
-(5, 5, NULL, 'CTEC12073 Outline', 'PDF', 'materials/course5_outline.pdf', '2026-07-13 11:20:48', 'Course Resources', 1),
-(6, 6, NULL, 'CTEC12212 Outline', 'PDF', 'materials/course6_outline.pdf', '2026-07-13 11:20:48', 'Course Resources', 1),
-(7, 7, NULL, 'CTEC12223 Outline', 'PDF', 'materials/course7_outline.pdf', '2026-07-13 11:20:48', 'Course Resources', 1),
-(8, 8, NULL, 'CTEC21042 Outline', 'PDF', 'materials/course8_outline.pdf', '2026-07-13 11:20:48', 'Course Resources', 1),
-(9, 9, NULL, 'CTEC21052 Outline', 'PDF', 'materials/course9_outline.pdf', '2026-07-13 11:20:48', 'Course Resources', 1),
-(10, 10, NULL, 'CTEC21063 Outline', 'PDF', 'materials/course10_outline.pdf', '2026-07-13 11:20:48', 'Course Resources', 1),
-(11, 11, NULL, 'CTEC22023 Outline', 'PDF', 'materials/course11_outline.pdf', '2026-07-13 11:20:48', 'Course Resources', 1),
-(12, 12, NULL, 'CTEC22032 Outline', 'PDF', 'materials/course12_outline.pdf', '2026-07-13 11:20:48', 'Course Resources', 1),
-(13, 13, NULL, 'CTEC22043 Outline', 'PDF', 'materials/course13_outline.pdf', '2026-07-13 11:20:48', 'Course Resources', 1),
-(14, 14, NULL, 'CTEC22053 Outline', 'PDF', 'materials/course14_outline.pdf', '2026-07-13 11:20:48', 'Course Resources', 1),
-(15, 15, NULL, 'CTEC22061 Outline', 'PDF', 'materials/course15_outline.pdf', '2026-07-13 11:20:48', 'Course Resources', 1),
-(16, 16, NULL, 'DELT13522 Outline', 'PDF', 'materials/course16_outline.pdf', '2026-07-13 11:20:48', 'Course Resources', 1),
-(17, 17, NULL, 'DELT13522A Outline', 'PDF', 'materials/course17_outline.pdf', '2026-07-13 11:20:48', 'Course Resources', 1),
-(18, 18, NULL, 'DELT21512 Outline', 'PDF', 'materials/course18_outline.pdf', '2026-07-13 11:20:48', 'Course Resources', 1),
-(19, 19, NULL, 'DELT22552 Outline', 'PDF', 'materials/course19_outline.pdf', '2026-07-13 11:20:48', 'Course Resources', 1),
-(20, 20, NULL, 'GTEC11013 Outline', 'PDF', 'materials/course20_outline.pdf', '2026-07-13 11:20:48', 'Course Resources', 1),
-(21, 21, NULL, 'GTEC12013 Outline', 'PDF', 'materials/course21_outline.pdf', '2026-07-13 11:20:48', 'Course Resources', 1),
-(22, 22, NULL, 'GTEC12023 Outline', 'PDF', 'materials/course22_outline.pdf', '2026-07-13 11:20:48', 'Course Resources', 1),
-(23, 23, NULL, 'GTEC12033 Outline', 'PDF', 'materials/course23_outline.pdf', '2026-07-13 11:20:48', 'Course Resources', 1),
-(32, 1, NULL, 'References/Reading Materials', 'Folder', 'materials/course1_references', '2026-07-13 11:20:48', 'Course Resources', 2),
-(33, 5, NULL, 'References/Reading Materials', 'Folder', 'materials/course5_references', '2026-07-13 11:20:48', 'Course Resources', 2),
-(34, 11, NULL, 'References/Reading Materials', 'Folder', 'materials/course11_references', '2026-07-13 11:20:48', 'Course Resources', 2),
-(35, 2, NULL, 'References/Reading Materials', 'Folder', 'materials/course2_references', '2026-07-13 11:20:48', 'Course Resources', 2),
-(36, 8, NULL, 'References/Reading Materials', 'Folder', 'materials/course8_references', '2026-07-13 11:20:48', 'Course Resources', 2),
-(37, 12, NULL, 'References/Reading Materials', 'Folder', 'materials/course12_references', '2026-07-13 11:20:48', 'Course Resources', 2),
-(38, 3, NULL, 'References/Reading Materials', 'Folder', 'materials/course3_references', '2026-07-13 11:20:48', 'Course Resources', 2),
-(39, 9, NULL, 'References/Reading Materials', 'Folder', 'materials/course9_references', '2026-07-13 11:20:48', 'Course Resources', 2),
-(40, 13, NULL, 'References/Reading Materials', 'Folder', 'materials/course13_references', '2026-07-13 11:20:48', 'Course Resources', 2),
-(41, 23, NULL, 'References/Reading Materials', 'Folder', 'materials/course23_references', '2026-07-13 11:20:48', 'Course Resources', 2),
-(42, 4, NULL, 'References/Reading Materials', 'Folder', 'materials/course4_references', '2026-07-13 11:20:48', 'Course Resources', 2),
-(43, 10, NULL, 'References/Reading Materials', 'Folder', 'materials/course10_references', '2026-07-13 11:20:48', 'Course Resources', 2),
-(44, 14, NULL, 'References/Reading Materials', 'Folder', 'materials/course14_references', '2026-07-13 11:20:48', 'Course Resources', 2),
-(45, 22, NULL, 'References/Reading Materials', 'Folder', 'materials/course22_references', '2026-07-13 11:20:48', 'Course Resources', 2),
-(46, 6, NULL, 'References/Reading Materials', 'Folder', 'materials/course6_references', '2026-07-13 11:20:48', 'Course Resources', 2),
-(47, 15, NULL, 'References/Reading Materials', 'Folder', 'materials/course15_references', '2026-07-13 11:20:48', 'Course Resources', 2),
-(48, 18, NULL, 'References/Reading Materials', 'Folder', 'materials/course18_references', '2026-07-13 11:20:48', 'Course Resources', 2),
-(49, 20, NULL, 'References/Reading Materials', 'Folder', 'materials/course20_references', '2026-07-13 11:20:48', 'Course Resources', 2),
-(50, 21, NULL, 'References/Reading Materials', 'Folder', 'materials/course21_references', '2026-07-13 11:20:48', 'Course Resources', 2),
-(51, 7, NULL, 'References/Reading Materials', 'Folder', 'materials/course7_references', '2026-07-13 11:20:48', 'Course Resources', 2),
-(52, 16, NULL, 'References/Reading Materials', 'Folder', 'materials/course16_references', '2026-07-13 11:20:48', 'Course Resources', 2),
-(53, 17, NULL, 'References/Reading Materials', 'Folder', 'materials/course17_references', '2026-07-13 11:20:48', 'Course Resources', 2),
-(54, 19, NULL, 'References/Reading Materials', 'Folder', 'materials/course19_references', '2026-07-13 11:20:48', 'Course Resources', 2),
-(63, 1, NULL, 'Lecture 1, Slides: Structured Programming I', 'PDF', 'materials/course1_lec1_slides.pdf', '2026-07-13 11:20:48', 'Lecture 1: Introduction', 1),
-(64, 2, NULL, 'Lecture 1, Slides: Computer Systems Organization', 'PDF', 'materials/course2_lec1_slides.pdf', '2026-07-13 11:20:48', 'Lecture 1: Introduction', 1),
-(65, 3, NULL, 'Lecture 1, Slides: Design Ideation and Creative Development', 'PDF', 'materials/course3_lec1_slides.pdf', '2026-07-13 11:20:48', 'Lecture 1: Introduction', 1),
-(66, 4, NULL, 'Lecture 1, Slides: Data Communication and Networking', 'PDF', 'materials/course4_lec1_slides.pdf', '2026-07-13 11:20:48', 'Lecture 1: Introduction', 1),
-(67, 5, NULL, 'Lecture 1, Slides: Structured Programming II', 'PDF', 'materials/course5_lec1_slides.pdf', '2026-07-13 11:20:48', 'Lecture 1: Introduction', 1),
-(68, 6, NULL, 'Lecture 1, Slides: Fundamentals of Electricity', 'PDF', 'materials/course6_lec1_slides.pdf', '2026-07-13 11:20:48', 'Lecture 1: Introduction', 1),
-(69, 7, NULL, 'Lecture 1, Slides: Statistics for Computing', 'PDF', 'materials/course7_lec1_slides.pdf', '2026-07-13 11:20:48', 'Lecture 1: Introduction', 1),
-(70, 8, NULL, 'Lecture 1, Slides: Web Programming', 'PDF', 'materials/course8_lec1_slides.pdf', '2026-07-13 11:20:48', 'Lecture 1: Introduction', 1),
-(71, 9, NULL, 'Lecture 1, Slides: Introduction to Cyber Security', 'PDF', 'materials/course9_lec1_slides.pdf', '2026-07-13 11:20:48', 'Lecture 1: Introduction', 1),
-(72, 10, NULL, 'Lecture 1, Slides: Database Systems', 'PDF', 'materials/course10_lec1_slides.pdf', '2026-07-13 11:20:48', 'Lecture 1: Introduction', 1),
-(73, 11, NULL, 'Lecture 1, Slides: Data Structures & Algorithms', 'PDF', 'materials/course11_lec1_slides.pdf', '2026-07-13 11:20:48', 'Lecture 1: Introduction', 1),
-(74, 12, NULL, 'Lecture 1, Slides: Software Engineering', 'PDF', 'materials/course12_lec1_slides.pdf', '2026-07-13 11:20:48', 'Lecture 1: Introduction', 1),
-(75, 13, NULL, 'Lecture 1, Slides: Object Oriented Programming', 'PDF', 'materials/course13_lec1_slides.pdf', '2026-07-13 11:20:48', 'Lecture 1: Introduction', 1),
-(76, 14, NULL, 'Lecture 1, Slides: Computer Architecture & Operating Systems', 'PDF', 'materials/course14_lec1_slides.pdf', '2026-07-13 11:20:48', 'Lecture 1: Introduction', 1),
-(77, 15, NULL, 'Lecture 1, Slides: Systems and Network Laboratory', 'PDF', 'materials/course15_lec1_slides.pdf', '2026-07-13 11:20:48', 'Lecture 1: Introduction', 1),
-(78, 16, NULL, 'Lecture 1, Slides: Communication for Technology', 'PDF', 'materials/course16_lec1_slides.pdf', '2026-07-13 11:20:48', 'Lecture 1: Introduction', 1),
-(79, 17, NULL, 'Lecture 1, Slides: English for Computing and Technology', 'PDF', 'materials/course17_lec1_slides.pdf', '2026-07-13 11:20:48', 'Lecture 1: Introduction', 1),
-(80, 18, NULL, 'Lecture 1, Slides: English for the World', 'PDF', 'materials/course18_lec1_slides.pdf', '2026-07-13 11:20:48', 'Lecture 1: Introduction', 1),
-(81, 19, NULL, 'Lecture 1, Slides: English for Technology', 'PDF', 'materials/course19_lec1_slides.pdf', '2026-07-13 11:20:48', 'Lecture 1: Introduction', 1),
-(82, 20, NULL, 'Lecture 1, Slides: Mathematics for Technology I', 'PDF', 'materials/course20_lec1_slides.pdf', '2026-07-13 11:20:48', 'Lecture 1: Introduction', 1),
-(83, 21, NULL, 'Lecture 1, Slides: Mathematics for Technology II', 'PDF', 'materials/course21_lec1_slides.pdf', '2026-07-13 11:20:48', 'Lecture 1: Introduction', 1),
-(84, 22, NULL, 'Lecture 1, Slides: Physics for Technology II', 'PDF', 'materials/course22_lec1_slides.pdf', '2026-07-13 11:20:48', 'Lecture 1: Introduction', 1),
-(85, 23, NULL, 'Lecture 1, Slides: Fundamental Practices in Technology', 'PDF', 'materials/course23_lec1_slides.pdf', '2026-07-13 11:20:48', 'Lecture 1: Introduction', 1),
-(94, 1, NULL, 'Lecture 1, Recording: Introduction', 'Video', 'materials/course1_lec1_recording.mp4', '2026-07-13 11:20:48', 'Lecture 1: Introduction', 2),
-(95, 5, NULL, 'Lecture 1, Recording: Introduction', 'Video', 'materials/course5_lec1_recording.mp4', '2026-07-13 11:20:48', 'Lecture 1: Introduction', 2),
-(96, 11, NULL, 'Lecture 1, Recording: Introduction', 'Video', 'materials/course11_lec1_recording.mp4', '2026-07-13 11:20:48', 'Lecture 1: Introduction', 2),
-(97, 2, NULL, 'Lecture 1, Recording: Introduction', 'Video', 'materials/course2_lec1_recording.mp4', '2026-07-13 11:20:48', 'Lecture 1: Introduction', 2),
-(98, 8, NULL, 'Lecture 1, Recording: Introduction', 'Video', 'materials/course8_lec1_recording.mp4', '2026-07-13 11:20:48', 'Lecture 1: Introduction', 2),
-(99, 12, NULL, 'Lecture 1, Recording: Introduction', 'Video', 'materials/course12_lec1_recording.mp4', '2026-07-13 11:20:48', 'Lecture 1: Introduction', 2),
-(100, 3, NULL, 'Lecture 1, Recording: Introduction', 'Video', 'materials/course3_lec1_recording.mp4', '2026-07-13 11:20:48', 'Lecture 1: Introduction', 2),
-(101, 9, NULL, 'Lecture 1, Recording: Introduction', 'Video', 'materials/course9_lec1_recording.mp4', '2026-07-13 11:20:48', 'Lecture 1: Introduction', 2),
-(102, 13, NULL, 'Lecture 1, Recording: Introduction', 'Video', 'materials/course13_lec1_recording.mp4', '2026-07-13 11:20:48', 'Lecture 1: Introduction', 2),
-(103, 23, NULL, 'Lecture 1, Recording: Introduction', 'Video', 'materials/course23_lec1_recording.mp4', '2026-07-13 11:20:48', 'Lecture 1: Introduction', 2),
-(104, 4, NULL, 'Lecture 1, Recording: Introduction', 'Video', 'materials/course4_lec1_recording.mp4', '2026-07-13 11:20:48', 'Lecture 1: Introduction', 2),
-(105, 10, NULL, 'Lecture 1, Recording: Introduction', 'Video', 'materials/course10_lec1_recording.mp4', '2026-07-13 11:20:48', 'Lecture 1: Introduction', 2),
-(106, 14, NULL, 'Lecture 1, Recording: Introduction', 'Video', 'materials/course14_lec1_recording.mp4', '2026-07-13 11:20:48', 'Lecture 1: Introduction', 2),
-(107, 22, NULL, 'Lecture 1, Recording: Introduction', 'Video', 'materials/course22_lec1_recording.mp4', '2026-07-13 11:20:48', 'Lecture 1: Introduction', 2),
-(108, 6, NULL, 'Lecture 1, Recording: Introduction', 'Video', 'materials/course6_lec1_recording.mp4', '2026-07-13 11:20:48', 'Lecture 1: Introduction', 2),
-(109, 15, NULL, 'Lecture 1, Recording: Introduction', 'Video', 'materials/course15_lec1_recording.mp4', '2026-07-13 11:20:48', 'Lecture 1: Introduction', 2),
-(110, 18, NULL, 'Lecture 1, Recording: Introduction', 'Video', 'materials/course18_lec1_recording.mp4', '2026-07-13 11:20:48', 'Lecture 1: Introduction', 2),
-(111, 20, NULL, 'Lecture 1, Recording: Introduction', 'Video', 'materials/course20_lec1_recording.mp4', '2026-07-13 11:20:48', 'Lecture 1: Introduction', 2),
-(112, 21, NULL, 'Lecture 1, Recording: Introduction', 'Video', 'materials/course21_lec1_recording.mp4', '2026-07-13 11:20:48', 'Lecture 1: Introduction', 2),
-(113, 7, NULL, 'Lecture 1, Recording: Introduction', 'Video', 'materials/course7_lec1_recording.mp4', '2026-07-13 11:20:48', 'Lecture 1: Introduction', 2),
-(114, 16, NULL, 'Lecture 1, Recording: Introduction', 'Video', 'materials/course16_lec1_recording.mp4', '2026-07-13 11:20:48', 'Lecture 1: Introduction', 2),
-(115, 17, NULL, 'Lecture 1, Recording: Introduction', 'Video', 'materials/course17_lec1_recording.mp4', '2026-07-13 11:20:48', 'Lecture 1: Introduction', 2),
-(116, 19, NULL, 'Lecture 1, Recording: Introduction', 'Video', 'materials/course19_lec1_recording.mp4', '2026-07-13 11:20:48', 'Lecture 1: Introduction', 2),
-(125, 12, NULL, 'Full Playlist', 'Link', 'materials/se_playlist.url', '2026-07-13 11:20:48', 'Course Resources', 3),
-(126, 12, NULL, 'Lecture 1, Recording: Introduction (continued)', 'Video', 'materials/se_lec1b_recording.mp4', '2026-07-13 11:20:48', 'Lecture 1: Introduction (continued)', 1),
-(127, 13, NULL, 'Full Playlist', 'Link', 'materials/oop_playlist.url', '2026-07-13 11:20:48', 'Course Resources', 3),
-(128, 13, NULL, 'Java Head Start', 'Link', 'materials/oop_java_headstart.url', '2026-07-13 11:20:48', 'Background and motivation of Object Oriented Methods', 1),
-(129, 13, NULL, 'Slides: Background and motivation', 'PDF', 'materials/oop_lec1_slides.pdf', '2026-07-13 11:20:48', 'Background and motivation of Object Oriented Methods', 2);
+(1, 1, NULL, 'CTEC11052 Outline', 'PDF', 'materials/course1_outline.pdf', '2026-07-13 05:50:48', 'Course Resources', 1),
+(2, 2, NULL, 'CTEC11063 Outline', 'PDF', 'materials/course2_outline.pdf', '2026-07-13 05:50:48', 'Course Resources', 1),
+(3, 3, NULL, 'CTEC11203 Outline', 'PDF', 'materials/course3_outline.pdf', '2026-07-13 05:50:48', 'Course Resources', 1),
+(4, 4, NULL, 'CTEC12052 Outline', 'PDF', 'materials/course4_outline.pdf', '2026-07-13 05:50:48', 'Course Resources', 1),
+(5, 5, NULL, 'CTEC12073 Outline', 'PDF', 'materials/course5_outline.pdf', '2026-07-13 05:50:48', 'Course Resources', 1),
+(6, 6, NULL, 'CTEC12212 Outline', 'PDF', 'materials/course6_outline.pdf', '2026-07-13 05:50:48', 'Course Resources', 1),
+(7, 7, NULL, 'CTEC12223 Outline', 'PDF', 'materials/course7_outline.pdf', '2026-07-13 05:50:48', 'Course Resources', 1),
+(8, 8, NULL, 'CTEC21042 Outline', 'PDF', 'materials/course8_outline.pdf', '2026-07-13 05:50:48', 'Course Resources', 1),
+(9, 9, NULL, 'CTEC21052 Outline', 'PDF', 'materials/course9_outline.pdf', '2026-07-13 05:50:48', 'Course Resources', 1),
+(10, 10, NULL, 'CTEC21063 Outline', 'PDF', 'materials/course10_outline.pdf', '2026-07-13 05:50:48', 'Course Resources', 1),
+(11, 11, NULL, 'CTEC22023 Outline', 'PDF', 'materials/course11_outline.pdf', '2026-07-13 05:50:48', 'Course Resources', 1),
+(12, 12, NULL, 'CTEC22032 Outline', 'PDF', 'materials/course12_outline.pdf', '2026-07-13 05:50:48', 'Course Resources', 1),
+(13, 13, NULL, 'CTEC22043 Outline', 'PDF', 'materials/course13_outline.pdf', '2026-07-13 05:50:48', 'Course Resources', 1),
+(14, 14, NULL, 'CTEC22053 Outline', 'PDF', 'materials/course14_outline.pdf', '2026-07-13 05:50:48', 'Course Resources', 1),
+(15, 15, NULL, 'CTEC22061 Outline', 'PDF', 'materials/course15_outline.pdf', '2026-07-13 05:50:48', 'Course Resources', 1),
+(16, 16, NULL, 'DELT13522 Outline', 'PDF', 'materials/course16_outline.pdf', '2026-07-13 05:50:48', 'Course Resources', 1),
+(17, 17, NULL, 'DELT13522A Outline', 'PDF', 'materials/course17_outline.pdf', '2026-07-13 05:50:48', 'Course Resources', 1),
+(18, 18, NULL, 'DELT21512 Outline', 'PDF', 'materials/course18_outline.pdf', '2026-07-13 05:50:48', 'Course Resources', 1),
+(19, 19, NULL, 'DELT22552 Outline', 'PDF', 'materials/course19_outline.pdf', '2026-07-13 05:50:48', 'Course Resources', 1),
+(20, 20, NULL, 'GTEC11013 Outline', 'PDF', 'materials/course20_outline.pdf', '2026-07-13 05:50:48', 'Course Resources', 1),
+(21, 21, NULL, 'GTEC12013 Outline', 'PDF', 'materials/course21_outline.pdf', '2026-07-13 05:50:48', 'Course Resources', 1),
+(22, 22, NULL, 'GTEC12023 Outline', 'PDF', 'materials/course22_outline.pdf', '2026-07-13 05:50:48', 'Course Resources', 1),
+(23, 23, NULL, 'GTEC12033 Outline', 'PDF', 'materials/course23_outline.pdf', '2026-07-13 05:50:48', 'Course Resources', 1),
+(32, 1, NULL, 'References/Reading Materials', 'Folder', 'materials/course1_references', '2026-07-13 05:50:48', 'Course Resources', 2),
+(33, 5, NULL, 'References/Reading Materials', 'Folder', 'materials/course5_references', '2026-07-13 05:50:48', 'Course Resources', 2),
+(34, 11, NULL, 'References/Reading Materials', 'Folder', 'materials/course11_references', '2026-07-13 05:50:48', 'Course Resources', 2),
+(35, 2, NULL, 'References/Reading Materials', 'Folder', 'materials/course2_references', '2026-07-13 05:50:48', 'Course Resources', 2),
+(36, 8, NULL, 'References/Reading Materials', 'Folder', 'materials/course8_references', '2026-07-13 05:50:48', 'Course Resources', 2),
+(37, 12, NULL, 'References/Reading Materials', 'Folder', 'materials/course12_references', '2026-07-13 05:50:48', 'Course Resources', 2),
+(38, 3, NULL, 'References/Reading Materials', 'Folder', 'materials/course3_references', '2026-07-13 05:50:48', 'Course Resources', 2),
+(39, 9, NULL, 'References/Reading Materials', 'Folder', 'materials/course9_references', '2026-07-13 05:50:48', 'Course Resources', 2),
+(40, 13, NULL, 'References/Reading Materials', 'Folder', 'materials/course13_references', '2026-07-13 05:50:48', 'Course Resources', 2),
+(41, 23, NULL, 'References/Reading Materials', 'Folder', 'materials/course23_references', '2026-07-13 05:50:48', 'Course Resources', 2),
+(42, 4, NULL, 'References/Reading Materials', 'Folder', 'materials/course4_references', '2026-07-13 05:50:48', 'Course Resources', 2),
+(43, 10, NULL, 'References/Reading Materials', 'Folder', 'materials/course10_references', '2026-07-13 05:50:48', 'Course Resources', 2),
+(44, 14, NULL, 'References/Reading Materials', 'Folder', 'materials/course14_references', '2026-07-13 05:50:48', 'Course Resources', 2),
+(45, 22, NULL, 'References/Reading Materials', 'Folder', 'materials/course22_references', '2026-07-13 05:50:48', 'Course Resources', 2),
+(46, 6, NULL, 'References/Reading Materials', 'Folder', 'materials/course6_references', '2026-07-13 05:50:48', 'Course Resources', 2),
+(47, 15, NULL, 'References/Reading Materials', 'Folder', 'materials/course15_references', '2026-07-13 05:50:48', 'Course Resources', 2),
+(48, 18, NULL, 'References/Reading Materials', 'Folder', 'materials/course18_references', '2026-07-13 05:50:48', 'Course Resources', 2),
+(49, 20, NULL, 'References/Reading Materials', 'Folder', 'materials/course20_references', '2026-07-13 05:50:48', 'Course Resources', 2),
+(50, 21, NULL, 'References/Reading Materials', 'Folder', 'materials/course21_references', '2026-07-13 05:50:48', 'Course Resources', 2),
+(51, 7, NULL, 'References/Reading Materials', 'Folder', 'materials/course7_references', '2026-07-13 05:50:48', 'Course Resources', 2),
+(52, 16, NULL, 'References/Reading Materials', 'Folder', 'materials/course16_references', '2026-07-13 05:50:48', 'Course Resources', 2),
+(53, 17, NULL, 'References/Reading Materials', 'Folder', 'materials/course17_references', '2026-07-13 05:50:48', 'Course Resources', 2),
+(54, 19, NULL, 'References/Reading Materials', 'Folder', 'materials/course19_references', '2026-07-13 05:50:48', 'Course Resources', 2),
+(63, 1, NULL, 'Lecture 1, Slides: Structured Programming I', 'PDF', 'materials/course1_lec1_slides.pdf', '2026-07-13 05:50:48', 'Lecture 1: Introduction', 1),
+(64, 2, NULL, 'Lecture 1, Slides: Computer Systems Organization', 'PDF', 'materials/course2_lec1_slides.pdf', '2026-07-13 05:50:48', 'Lecture 1: Introduction', 1),
+(65, 3, NULL, 'Lecture 1, Slides: Design Ideation and Creative Development', 'PDF', 'materials/course3_lec1_slides.pdf', '2026-07-13 05:50:48', 'Lecture 1: Introduction', 1),
+(66, 4, NULL, 'Lecture 1, Slides: Data Communication and Networking', 'PDF', 'materials/course4_lec1_slides.pdf', '2026-07-13 05:50:48', 'Lecture 1: Introduction', 1),
+(67, 5, NULL, 'Lecture 1, Slides: Structured Programming II', 'PDF', 'materials/course5_lec1_slides.pdf', '2026-07-13 05:50:48', 'Lecture 1: Introduction', 1),
+(68, 6, NULL, 'Lecture 1, Slides: Fundamentals of Electricity', 'PDF', 'materials/course6_lec1_slides.pdf', '2026-07-13 05:50:48', 'Lecture 1: Introduction', 1),
+(69, 7, NULL, 'Lecture 1, Slides: Statistics for Computing', 'PDF', 'materials/course7_lec1_slides.pdf', '2026-07-13 05:50:48', 'Lecture 1: Introduction', 1),
+(70, 8, NULL, 'Lecture 1, Slides: Web Programming', 'PDF', 'materials/course8_lec1_slides.pdf', '2026-07-13 05:50:48', 'Lecture 1: Introduction', 1),
+(71, 9, NULL, 'Lecture 1, Slides: Introduction to Cyber Security', 'PDF', 'materials/course9_lec1_slides.pdf', '2026-07-13 05:50:48', 'Lecture 1: Introduction', 1),
+(72, 10, NULL, 'Lecture 1, Slides: Database Systems', 'PDF', 'materials/course10_lec1_slides.pdf', '2026-07-13 05:50:48', 'Lecture 1: Introduction', 1),
+(73, 11, NULL, 'Lecture 1, Slides: Data Structures & Algorithms', 'PDF', 'materials/course11_lec1_slides.pdf', '2026-07-13 05:50:48', 'Lecture 1: Introduction', 1),
+(74, 12, NULL, 'Lecture 1, Slides: Software Engineering', 'PDF', 'materials/course12_lec1_slides.pdf', '2026-07-13 05:50:48', 'Lecture 1: Introduction', 1),
+(75, 13, NULL, 'Lecture 1, Slides: Object Oriented Programming', 'PDF', 'materials/course13_lec1_slides.pdf', '2026-07-13 05:50:48', 'Lecture 1: Introduction', 1),
+(76, 14, NULL, 'Lecture 1, Slides: Computer Architecture & Operating Systems', 'PDF', 'materials/course14_lec1_slides.pdf', '2026-07-13 05:50:48', 'Lecture 1: Introduction', 1),
+(77, 15, NULL, 'Lecture 1, Slides: Systems and Network Laboratory', 'PDF', 'materials/course15_lec1_slides.pdf', '2026-07-13 05:50:48', 'Lecture 1: Introduction', 1),
+(78, 16, NULL, 'Lecture 1, Slides: Communication for Technology', 'PDF', 'materials/course16_lec1_slides.pdf', '2026-07-13 05:50:48', 'Lecture 1: Introduction', 1),
+(79, 17, NULL, 'Lecture 1, Slides: English for Computing and Technology', 'PDF', 'materials/course17_lec1_slides.pdf', '2026-07-13 05:50:48', 'Lecture 1: Introduction', 1),
+(80, 18, NULL, 'Lecture 1, Slides: English for the World', 'PDF', 'materials/course18_lec1_slides.pdf', '2026-07-13 05:50:48', 'Lecture 1: Introduction', 1),
+(81, 19, NULL, 'Lecture 1, Slides: English for Technology', 'PDF', 'materials/course19_lec1_slides.pdf', '2026-07-13 05:50:48', 'Lecture 1: Introduction', 1),
+(82, 20, NULL, 'Lecture 1, Slides: Mathematics for Technology I', 'PDF', 'materials/course20_lec1_slides.pdf', '2026-07-13 05:50:48', 'Lecture 1: Introduction', 1),
+(83, 21, NULL, 'Lecture 1, Slides: Mathematics for Technology II', 'PDF', 'materials/course21_lec1_slides.pdf', '2026-07-13 05:50:48', 'Lecture 1: Introduction', 1),
+(84, 22, NULL, 'Lecture 1, Slides: Physics for Technology II', 'PDF', 'materials/course22_lec1_slides.pdf', '2026-07-13 05:50:48', 'Lecture 1: Introduction', 1),
+(85, 23, NULL, 'Lecture 1, Slides: Fundamental Practices in Technology', 'PDF', 'materials/course23_lec1_slides.pdf', '2026-07-13 05:50:48', 'Lecture 1: Introduction', 1),
+(94, 1, NULL, 'Lecture 1, Recording: Introduction', 'Video', 'materials/course1_lec1_recording.mp4', '2026-07-13 05:50:48', 'Lecture 1: Introduction', 2),
+(95, 5, NULL, 'Lecture 1, Recording: Introduction', 'Video', 'materials/course5_lec1_recording.mp4', '2026-07-13 05:50:48', 'Lecture 1: Introduction', 2),
+(96, 11, NULL, 'Lecture 1, Recording: Introduction', 'Video', 'materials/course11_lec1_recording.mp4', '2026-07-13 05:50:48', 'Lecture 1: Introduction', 2),
+(97, 2, NULL, 'Lecture 1, Recording: Introduction', 'Video', 'materials/course2_lec1_recording.mp4', '2026-07-13 05:50:48', 'Lecture 1: Introduction', 2),
+(98, 8, NULL, 'Lecture 1, Recording: Introduction', 'Video', 'materials/course8_lec1_recording.mp4', '2026-07-13 05:50:48', 'Lecture 1: Introduction', 2),
+(99, 12, NULL, 'Lecture 1, Recording: Introduction', 'Video', 'materials/course12_lec1_recording.mp4', '2026-07-13 05:50:48', 'Lecture 1: Introduction', 2),
+(100, 3, NULL, 'Lecture 1, Recording: Introduction', 'Video', 'materials/course3_lec1_recording.mp4', '2026-07-13 05:50:48', 'Lecture 1: Introduction', 2),
+(101, 9, NULL, 'Lecture 1, Recording: Introduction', 'Video', 'materials/course9_lec1_recording.mp4', '2026-07-13 05:50:48', 'Lecture 1: Introduction', 2),
+(102, 13, NULL, 'Lecture 1, Recording: Introduction', 'Video', 'materials/course13_lec1_recording.mp4', '2026-07-13 05:50:48', 'Lecture 1: Introduction', 2),
+(103, 23, NULL, 'Lecture 1, Recording: Introduction', 'Video', 'materials/course23_lec1_recording.mp4', '2026-07-13 05:50:48', 'Lecture 1: Introduction', 2),
+(104, 4, NULL, 'Lecture 1, Recording: Introduction', 'Video', 'materials/course4_lec1_recording.mp4', '2026-07-13 05:50:48', 'Lecture 1: Introduction', 2),
+(105, 10, NULL, 'Lecture 1, Recording: Introduction', 'Video', 'materials/course10_lec1_recording.mp4', '2026-07-13 05:50:48', 'Lecture 1: Introduction', 2),
+(106, 14, NULL, 'Lecture 1, Recording: Introduction', 'Video', 'materials/course14_lec1_recording.mp4', '2026-07-13 05:50:48', 'Lecture 1: Introduction', 2),
+(107, 22, NULL, 'Lecture 1, Recording: Introduction', 'Video', 'materials/course22_lec1_recording.mp4', '2026-07-13 05:50:48', 'Lecture 1: Introduction', 2),
+(108, 6, NULL, 'Lecture 1, Recording: Introduction', 'Video', 'materials/course6_lec1_recording.mp4', '2026-07-13 05:50:48', 'Lecture 1: Introduction', 2),
+(109, 15, NULL, 'Lecture 1, Recording: Introduction', 'Video', 'materials/course15_lec1_recording.mp4', '2026-07-13 05:50:48', 'Lecture 1: Introduction', 2),
+(110, 18, NULL, 'Lecture 1, Recording: Introduction', 'Video', 'materials/course18_lec1_recording.mp4', '2026-07-13 05:50:48', 'Lecture 1: Introduction', 2),
+(111, 20, NULL, 'Lecture 1, Recording: Introduction', 'Video', 'materials/course20_lec1_recording.mp4', '2026-07-13 05:50:48', 'Lecture 1: Introduction', 2),
+(112, 21, NULL, 'Lecture 1, Recording: Introduction', 'Video', 'materials/course21_lec1_recording.mp4', '2026-07-13 05:50:48', 'Lecture 1: Introduction', 2),
+(113, 7, NULL, 'Lecture 1, Recording: Introduction', 'Video', 'materials/course7_lec1_recording.mp4', '2026-07-13 05:50:48', 'Lecture 1: Introduction', 2),
+(114, 16, NULL, 'Lecture 1, Recording: Introduction', 'Video', 'materials/course16_lec1_recording.mp4', '2026-07-13 05:50:48', 'Lecture 1: Introduction', 2),
+(115, 17, NULL, 'Lecture 1, Recording: Introduction', 'Video', 'materials/course17_lec1_recording.mp4', '2026-07-13 05:50:48', 'Lecture 1: Introduction', 2),
+(116, 19, NULL, 'Lecture 1, Recording: Introduction', 'Video', 'materials/course19_lec1_recording.mp4', '2026-07-13 05:50:48', 'Lecture 1: Introduction', 2),
+(125, 12, NULL, 'Full Playlist', 'Link', 'materials/se_playlist.url', '2026-07-13 05:50:48', 'Course Resources', 3),
+(126, 12, NULL, 'Lecture 1, Recording: Introduction (continued)', 'Video', 'materials/se_lec1b_recording.mp4', '2026-07-13 05:50:48', 'Lecture 1: Introduction (continued)', 1),
+(127, 13, NULL, 'Full Playlist', 'Link', 'materials/oop_playlist.url', '2026-07-13 05:50:48', 'Course Resources', 3),
+(128, 13, NULL, 'Java Head Start', 'Link', 'materials/oop_java_headstart.url', '2026-07-13 05:50:48', 'Background and motivation of Object Oriented Methods', 1),
+(129, 13, NULL, 'Slides: Background and motivation', 'PDF', 'materials/oop_lec1_slides.pdf', '2026-07-13 05:50:48', 'Background and motivation of Object Oriented Methods', 2);
 
 --
 -- Dumping data for table `students`
 --
-INSERT INTO `students` (`student_id`, `full_name`, `email`, `mobile`, `degree_id`, `user_id`) VALUES
-('BST2022001', 'Isuru Jayawardena', 'bst2022001@students.fct.edu.lk', '0751234501', 3, 11),
-('BST2022002', 'Sanduni Perera', 'bst2022002@students.fct.edu.lk', '0751234502', 3, 12),
-('BST2022003', 'Kavindu Senanayake', 'bst2022003@students.fct.edu.lk', '0751234503', 3, 13),
-('BST2022004', 'Dilmi Fernando', 'bst2022004@students.fct.edu.lk', '0751234504', 3, 14),
-('BST2022005', 'Chanuka Wijesiri', 'bst2022005@students.fct.edu.lk', '0751234505', 3, 15),
-('CS2022001', 'Kasun Perera', 'cs2022001@students.fct.edu.lk', '0711234501', 1, 1),
-('CS2022002', 'Nadeesha Silva', 'cs2022002@students.fct.edu.lk', '0711234502', 1, 2),
-('CS2022003', 'Sahan Fernando', 'cs2022003@students.fct.edu.lk', '0711234503', 1, 3),
-('CS2022004', 'Dulanjana Jayasuriya', 'cs2022004@students.fct.edu.lk', '0711234504', 1, 4),
-('CS2022005', 'Tharindu Madushan', 'cs2022005@students.fct.edu.lk', '0711234505', 1, 5),
-('CT2022001', 'Sachini Perera', 'ct2022001@students.fct.edu.lk', '0721234501', 2, 6),
-('CT2022002', 'Nipun Wijesinghe', 'ct2022002@students.fct.edu.lk', '0721234502', 2, 7),
-('CT2022003', 'Yasiru Gunawardena', 'ct2022003@students.fct.edu.lk', '0721234503', 2, 8),
-('CT2022004', 'Hiruni Fernando', 'ct2022004@students.fct.edu.lk', '0721234504', 2, 9),
-('CT2022005', 'Ravindu Silva', 'ct2022005@students.fct.edu.lk', '0721234505', 2, 10),
-('ET2022001', 'Ashen Perera', 'et2022001@students.fct.edu.lk', '0771234501', 4, 16),
-('ET2022002', 'Nethmi Silva', 'et2022002@students.fct.edu.lk', '0771234502', 4, 17),
-('ET2022003', 'Pasindu Jayasinghe', 'et2022003@students.fct.edu.lk', '0771234503', 4, 18),
-('ET2022004', 'Malsha Fernando', 'et2022004@students.fct.edu.lk', '0771234504', 4, 19),
-('ET2022005', 'Gayan Madusanka', 'et2022005@students.fct.edu.lk', '0771234505', 4, 20);
+
+INSERT INTO `students` (`student_id`, `full_name`, `email`, `mobile`, `dob`, `degree_program`, `status`, `batch`, `degree_id`, `user_id`) VALUES
+('BST2022001', 'Isuru Jayawardena', 'bst2022001@students.fct.edu.lk', '0751234501', NULL, NULL, 'Active', NULL, 3, 11),
+('BST2022002', 'Sanduni Perera', 'bst2022002@students.fct.edu.lk', '0751234502', NULL, NULL, 'Active', NULL, 3, 12),
+('BST2022003', 'Kavindu Senanayake', 'bst2022003@students.fct.edu.lk', '0751234503', NULL, NULL, 'Active', NULL, 3, 13),
+('BST2022004', 'Dilmi Fernando', 'bst2022004@students.fct.edu.lk', '0751234504', NULL, NULL, 'Active', NULL, 3, 14),
+('BST2022005', 'Chanuka Wijesiri', 'bst2022005@students.fct.edu.lk', '0751234505', NULL, NULL, 'Active', NULL, 3, 15),
+('CS2022001', 'Kasun Perera', 'cs2022001@students.fct.edu.lk', '0711234501', NULL, NULL, 'Active', NULL, 1, 1),
+('CS2022002', 'Nadeesha Silva', 'cs2022002@students.fct.edu.lk', '0711234502', NULL, NULL, 'Active', NULL, 1, 2),
+('CS2022003', 'Sahan Fernando', 'cs2022003@students.fct.edu.lk', '0711234503', NULL, NULL, 'Active', NULL, 1, 3),
+('CS2022004', 'Dulanjana Jayasuriya', 'cs2022004@students.fct.edu.lk', '0711234504', NULL, NULL, 'Active', NULL, 1, 4),
+('CS2022005', 'Tharindu Madushan', 'cs2022005@students.fct.edu.lk', '0711234505', NULL, NULL, 'Active', NULL, 1, 5),
+('CT/2022/014', 'Shashika Sandaruwan', 'shashika04@gmail.com', NULL, '2004-01-23', 'Bachelor (Hons) of Information Communication and Technology', 'Active', 'CT/2022', 2, 41),
+('CT/2022/077', 'Pandithasundara P.S.D.V.Y.Y.T', 'Pandith-ct22077@stu.kn.ac.lk', NULL, '2004-01-20', 'Bachelor (Hons) of Information Communication and Technology', 'Active', 'CT/2022', 2, 42),
+('CT/2023/023', 'Kavindu Kalhara', 'kavindu@gmail.com', NULL, '2003-10-20', 'Bachelor of Engineering Technology(Hons)', 'Active', 'CT/2023', 4, 43),
+('CT2022001', 'Sachini Perera', 'ct2022001@students.fct.edu.lk', '0721234501', NULL, NULL, 'Active', NULL, 2, 6),
+('CT2022002', 'Nipun Wijesinghe', 'ct2022002@students.fct.edu.lk', '0721234502', NULL, NULL, 'Active', NULL, 2, 7),
+('CT2022003', 'Yasiru Gunawardena', 'ct2022003@students.fct.edu.lk', '0721234503', NULL, NULL, 'Active', NULL, 2, 8),
+('CT2022004', 'Hiruni Fernando', 'ct2022004@students.fct.edu.lk', '0721234504', NULL, NULL, 'Active', NULL, 2, 9),
+('CT2022005', 'Ravindu Silva', 'ct2022005@students.fct.edu.lk', '0721234505', NULL, NULL, 'Active', NULL, 2, 10),
+('ET2022001', 'Ashen Perera', 'et2022001@students.fct.edu.lk', '0771234501', NULL, NULL, 'Active', NULL, 4, 16),
+('ET2022002', 'Nethmi Silva', 'et2022002@students.fct.edu.lk', '0771234502', NULL, NULL, 'Active', NULL, 4, 17),
+('ET2022003', 'Pasindu Jayasinghe', 'et2022003@students.fct.edu.lk', '0771234503', NULL, NULL, 'Active', NULL, 4, 18),
+('ET2022004', 'Malsha Fernando', 'et2022004@students.fct.edu.lk', '0771234504', NULL, NULL, 'Active', NULL, 4, 19),
+('ET2022005', 'Gayan Madusanka', 'et2022005@students.fct.edu.lk', '0771234505', NULL, NULL, 'Active', NULL, 4, 20);
 
 --
 -- Dumping data for table `student_timetable`
 --
+
 INSERT INTO `student_timetable` (`timetable_id`, `degree_id`, `course_id`, `day_of_week`, `start_time`, `end_time`, `venue`, `semester`) VALUES
 (1, 4, 1, 'Monday', '08:30:00', '10:30:00', 'LH-101', 1),
 (2, 4, 2, 'Monday', '10:45:00', '12:45:00', 'LH-101', 1),
@@ -311,50 +363,104 @@ INSERT INTO `student_timetable` (`timetable_id`, `degree_id`, `course_id`, `day_
 --
 -- Dumping data for table `submissions`
 --
+
 INSERT INTO `submissions` (`submission_id`, `course_id`, `assignment_id`, `student_id`, `file_name`, `file_path`, `submitted_at`) VALUES
-(3, 2, NULL, 'CS2022001', 'crop new 2.jpg', 'uploads\\submissions\\2\\1783966442011_crop new 2.jpg', '2026-07-13 18:14:02');
+(3, 2, NULL, 'CS2022001', 'crop new 2.jpg', 'uploads\\submissions\\2\\1783966442011_crop new 2.jpg', '2026-07-13 12:44:02'),
+(4, 3, NULL, 'CS2022001', 'crop new.jpg', 'uploads\\submissions\\3\\1784051506723_crop new.jpg', '2026-07-14 12:21:46');
+
+--
+-- Dumping data for table `timetable`
+--
+
+INSERT INTO `timetable` (`id`, `batch`, `time_slot`, `day_of_week`, `course_code`) VALUES
+(1, 'CT/2022', '08:00 - 08.55', 'Wed', 'CTEC 21063'),
+(2, 'CT/2022', '08:00 - 08.55', 'Thu', 'GTEC 21023'),
+(3, 'CT/2022', '08:00 - 08.55', 'Fri', 'GTEC 21043'),
+(4, 'CT/2022', '09:00 - 09.55', 'Tue', 'GTEC 21043'),
+(5, 'CT/2022', '09:00 - 09.55', 'Wed', 'CTEC 21063'),
+(6, 'CT/2022', '09:00 - 09.55', 'Thu', 'GTEC 21023'),
+(7, 'CT/2022', '09:00 - 09.55', 'Fri', 'GTEC 21043'),
+(8, 'CT/2022', '10:00 - 10.55', 'Tue', 'GTEC 21043'),
+(9, 'CT/2022', '10:00 - 10.55', 'Thu', 'CTEC 21042'),
+(10, 'CT/2022', '10:00 - 10.55', 'Fri', 'CTEC 21052'),
+(11, 'CT/2022', '11:00 - 11.55', 'Tue', 'GTEC 21043'),
+(12, 'CT/2022', '11:00 - 11.55', 'Thu', 'CTEC 21042'),
+(13, 'CT/2022', '11:00 - 11.55', 'Fri', 'CTEC 21052'),
+(14, 'CT/2022', '13:00 - 13.55', 'Wed', 'CTEC 21063'),
+(15, 'CT/2022', '14:00 - 14.55', 'Tue', 'DELT 21512'),
+(16, 'CT/2022', '14:00 - 14.55', 'Wed', 'CTEC 21063'),
+(17, 'CT/2022', '15:00 - 15.55', 'Tue', 'DELT 21512'),
+(18, 'CT/2022', '15:00 - 15.55', 'Wed', 'GTEC 23032'),
+(19, 'CT/2022', '16:00 - 16.55', 'Wed', 'GTEC 23032'),
+(20, 'CT/2023', '08:00 - 08.55', 'Mon', 'GTEC 23032'),
+(21, 'CT/2023', '10:00 - 10.55', 'Mon', 'CTEC 22023'),
+(22, 'CT/2023', '11:00 - 11.55', 'Mon', 'CTEC 22023'),
+(23, 'CT/2023', '14:00 - 14.55', 'Mon', 'CTEC 22061'),
+(24, 'CT/2023', '15:00 - 15.55', 'Mon', 'CTEC 22061'),
+(25, 'CT/2023', '10:00 - 10.55', 'Tue', 'CTEC 22043'),
+(26, 'CT/2023', '11:00 - 11.55', 'Tue', 'CTEC 22043'),
+(27, 'CT/2023', '14:00 - 14.55', 'Tue', 'DELT 22552'),
+(28, 'CT/2023', '15:00 - 15.55', 'Tue', 'DELT 22552'),
+(29, 'CT/2023', '08:00 - 08.55', 'Wed', 'CTEC 22053'),
+(30, 'CT/2023', '10:00 - 10.55', 'Wed', 'CTEC 22053'),
+(31, 'CT/2023', '11:00 - 11.55', 'Wed', 'CTEC 22053'),
+(32, 'CT/2023', '14:00 - 14.55', 'Wed', 'CTEC 22023'),
+(33, 'CT/2023', '15:00 - 15.55', 'Wed', 'CTEC 22023'),
+(34, 'CT/2023', '10:00 - 10.55', 'Thu', 'CTEC 22032'),
+(35, 'CT/2023', '11:00 - 11.55', 'Thu', 'CTEC 22032'),
+(36, 'CT/2023', '13:00 - 13.55', 'Thu', 'CTEC 22043'),
+(37, 'CT/2023', '14:00 - 14.55', 'Thu', 'CTEC 22043'),
+(38, 'CT/2023', '08:00 - 08.55', 'Fri', 'GTEC 22033'),
+(39, 'CT/2023', '09:00 - 09.55', 'Fri', 'GTEC 22033');
 
 --
 -- Dumping data for table `users`
 --
-INSERT INTO `users` (`user_id`, `username`, `password`, `role`) VALUES
-(1, 'CS2022001', '123456', 'Student'),
-(2, 'CS2022002', '123456', 'Student'),
-(3, 'CS2022003', '123456', 'Student'),
-(4, 'CS2022004', '123456', 'Student'),
-(5, 'CS2022005', '123456', 'Student'),
-(6, 'CT2022001', '123456', 'Student'),
-(7, 'CT2022002', '123456', 'Student'),
-(8, 'CT2022003', '123456', 'Student'),
-(9, 'CT2022004', '123456', 'Student'),
-(10, 'CT2022005', '123456', 'Student'),
-(11, 'BST2022001', '123456', 'Student'),
-(12, 'BST2022002', '123456', 'Student'),
-(13, 'BST2022003', '123456', 'Student'),
-(14, 'BST2022004', '123456', 'Student'),
-(15, 'BST2022005', '123456', 'Student'),
-(16, 'ET2022001', '123456', 'Student'),
-(17, 'ET2022002', '123456', 'Student'),
-(18, 'ET2022003', '123456', 'Student'),
-(19, 'ET2022004', '123456', 'Student'),
-(20, 'ET2022005', '123456', 'Student'),
-(21, 'LE001', '123456', 'Lecturer'),
-(22, 'LE002', '123456', 'Lecturer'),
-(23, 'LE003', '123456', 'Lecturer'),
-(24, 'LE004', '123456', 'Lecturer'),
-(25, 'LE005', '123456', 'Lecturer'),
-(26, 'LE006', '123456', 'Lecturer'),
-(27, 'LE007', '123456', 'Lecturer'),
-(28, 'LE008', '123456', 'Lecturer'),
-(29, 'LE009', '123456', 'Lecturer'),
-(30, 'LE010', '123456', 'Lecturer'),
-(31, 'LE011', '123456', 'Lecturer'),
-(32, 'LE012', '123456', 'Lecturer'),
-(33, 'LE013', '123456', 'Lecturer'),
-(34, 'LE014', '123456', 'Lecturer'),
-(35, 'LE015', '123456', 'Lecturer'),
-(36, 'LE016', '123456', 'Lecturer'),
-(37, 'LE017', '123456', 'Lecturer'),
-(38, 'LE018', '123456', 'Lecturer'),
-(39, 'admin', 'admin123', 'Admin');
 
+INSERT INTO `users` (`user_id`, `username`, `password`, `role`, `student_id`, `full_name`, `email`) VALUES
+(1, 'pereraCS2022001', '123456', 'Student', 'CS2022001', 'Kasun Perera', 'cs2022001@students.fct.edu.lk'),
+(2, 'silvaCS2022002', '123456', 'Student', 'CS2022002', 'Nadeesha Silva', 'cs2022002@students.fct.edu.lk'),
+(3, 'fernandoCS2022003', '123456', 'Student', 'CS2022003', 'Sahan Fernando', 'cs2022003@students.fct.edu.lk'),
+(4, 'jayasuriyaCS2022004', '123456', 'Student', 'CS2022004', 'Dulanjana Jayasuriya', 'cs2022004@students.fct.edu.lk'),
+(5, 'madushanCS2022005', '123456', 'Student', 'CS2022005', 'Tharindu Madushan', 'cs2022005@students.fct.edu.lk'),
+(6, 'pereraCT2022001', '123456', 'Student', 'CT2022001', 'Sachini Perera', 'ct2022001@students.fct.edu.lk'),
+(7, 'wijesingheCT2022002', '123456', 'Student', 'CT2022002', 'Nipun Wijesinghe', 'ct2022002@students.fct.edu.lk'),
+(8, 'gunawardenaCT2022003', '123456', 'Student', 'CT2022003', 'Yasiru Gunawardena', 'ct2022003@students.fct.edu.lk'),
+(9, 'fernandoCT2022004', '123456', 'Student', 'CT2022004', 'Hiruni Fernando', 'ct2022004@students.fct.edu.lk'),
+(10, 'silvaCT2022005', '123456', 'Student', 'CT2022005', 'Ravindu Silva', 'ct2022005@students.fct.edu.lk'),
+(11, 'jayawardenaBST2022001', '123456', 'Student', 'BST2022001', 'Isuru Jayawardena', 'bst2022001@students.fct.edu.lk'),
+(12, 'pereraBST2022002', '123456', 'Student', 'BST2022002', 'Sanduni Perera', 'bst2022002@students.fct.edu.lk'),
+(13, 'senanayakeBST2022003', '123456', 'Student', 'BST2022003', 'Kavindu Senanayake', 'bst2022003@students.fct.edu.lk'),
+(14, 'fernandoBST2022004', '123456', 'Student', 'BST2022004', 'Dilmi Fernando', 'bst2022004@students.fct.edu.lk'),
+(15, 'wijesiriBST2022005', '123456', 'Student', 'BST2022005', 'Chanuka Wijesiri', 'bst2022005@students.fct.edu.lk'),
+(16, 'pereraET2022001', '123456', 'Student', 'ET2022001', 'Ashen Perera', 'et2022001@students.fct.edu.lk'),
+(17, 'silvaET2022002', '123456', 'Student', 'ET2022002', 'Nethmi Silva', 'et2022002@students.fct.edu.lk'),
+(18, 'ET2022003', '123456', 'Student', 'ET2022003', 'Pasindu Jayasinghe', 'et2022003@students.fct.edu.lk'),
+(19, 'ET2022004', '123456', 'Student', 'ET2022004', 'Malsha Fernando', 'et2022004@students.fct.edu.lk'),
+(20, 'ET2022005', '123456', 'Student', 'ET2022005', 'Gayan Madusanka', 'et2022005@students.fct.edu.lk'),
+(21, 'LE001', '123456', 'Lecturer', NULL, 'Dr. Laalitha S. I. Liyanage', 'laalitha@kln.ac.lk'),
+(22, 'LE002', '123456', 'Lecturer', NULL, 'Dr. Chamli Pushpakumara', 'chamli@kln.ac.lk'),
+(23, 'LE003', '123456', 'Lecturer', NULL, 'Dr. Pradeep W. Samarasekere', 'pradeeps@kln.ac.lk'),
+(24, 'LE004', '123456', 'Lecturer', NULL, 'Dr. Kasun Fernando', 'kasunf@kln.ac.lk'),
+(25, 'LE005', '123456', 'Lecturer', NULL, 'Dr. Chanaka Udayanga', 'chanakau@kln.ac.lk'),
+(26, 'LE006', '123456', 'Lecturer', NULL, 'Dr. Amila Jeewandara', 'amilaj@kln.ac.lk'),
+(27, 'LE007', '123456', 'Lecturer', NULL, 'Dr. Induni Siriwardane', 'induni@kln.ac.lk'),
+(28, 'LE008', '123456', 'Lecturer', NULL, 'Dr. Tharaga Sharmilan', 'tharagas@kln.ac.lk'),
+(29, 'LE009', '123456', 'Lecturer', NULL, 'Dr. Shakila Pathirana', 'shakilap@kln.ac.lk'),
+(30, 'LE010', '123456', 'Lecturer', NULL, 'Dr. S. P. Kasthuri Arachchi', 'sandelik@kln.ac.lk'),
+(31, 'LE011', '123456', 'Lecturer', NULL, 'Prof. S. R. Liyanage', 'sidath@kln.ac.lk'),
+(32, 'LE012', '123456', 'Lecturer', NULL, 'Dr. M. C. Wijegunasekara', 'carmel@kln.ac.lk'),
+(33, 'LE013', '123456', 'Lecturer', NULL, 'Dr. Mohamed Ishan Sabar', 'ishans@kln.ac.lk'),
+(34, 'LE014', '123456', 'Lecturer', NULL, 'Mr. Kesavan Selvarajah', 'kesavans@kln.ac.lk'),
+(35, 'LE015', '123456', 'Lecturer', NULL, 'Snr. Prof. N. G. J. Dias', 'ngjdias@kln.ac.lk'),
+(36, 'LE016', '123456', 'Lecturer', NULL, 'Dr. Rajitha Tennekoon', 'rajithat@kln.ac.lk'),
+(37, 'LE017', '123456', 'Lecturer', NULL, 'Dr. Rasika Rajapaksha', 'rasikar@kln.ac.lk'),
+(38, 'LE018', '123456', 'Lecturer', NULL, 'Dr. Madusha Chandrasena', 'madushac@kln.ac.lk'),
+(39, 'admin', 'admin123', 'Admin', NULL, 'System Administrator', 'admin@kln.ac.lk'),
+(40, 'ssk', '123456', 'Student', NULL, 'shashika', 'ssk04@gmail.com'),
+(41, 'sandaruwanCT2022014', '123456', 'Student', 'CT/2022/014', 'Shashika Sandaruwan', 'shashika04@gmail.com'),
+(42, 'pandithasundaraCT2022077', '123456', 'Student', 'CT/2022/077', 'Pandithasundara P.S.D.V.Y.Y.T', 'Pandith-ct22077@stu.kn.ac.lk'),
+(43, 'kalharaCT2023023', '123456', 'Student', 'CT/2023/023', 'Kavindu Kalhara', 'kavindu@gmail.com');
+
+SET FOREIGN_KEY_CHECKS = 1;
+COMMIT;

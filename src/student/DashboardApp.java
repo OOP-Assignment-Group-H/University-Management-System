@@ -1,4 +1,3 @@
-
 package student;
 
 import DB.DBConnection;
@@ -64,7 +63,6 @@ public class DashboardApp extends JFrame {
         setLayout(new BorderLayout());
 
         contentPanel.add(buildDashboardPanel(), KEY_DASHBOARD);
-//Add course file here
 
         String[] keys = {KEY_DASHBOARD, KEY_COURSES};
         String[] labels = {"Dashboard", "Courses"};
@@ -81,7 +79,20 @@ public class DashboardApp extends JFrame {
         loadStudentDetails();
     }
 
-    private void showSection(String key) { cardLayout.show(contentPanel, key); }
+    private void showSection(String key) {
+        if (KEY_COURSES.equals(key)) {
+            // CourseManagement is its own JFrame (not a JPanel), so it can't live in the
+            // CardLayout. Open it as a separate window and hide this one while it's open.
+            student.course.CourseManagement courseWindow =
+                    new student.course.CourseManagement(cachedStudentId, () -> {
+                        this.setVisible(true);
+                    });
+            courseWindow.setVisible(true);
+            this.setVisible(false);
+            return;
+        }
+        cardLayout.show(contentPanel, key);
+    }
     private void confirmLogout() { System.exit(0); }
 
     private JPanel buildTopBar() {
@@ -293,43 +304,41 @@ public class DashboardApp extends JFrame {
         JPanel outer = card("\uD83D\uDDD3 WEEKLY TIMETABLE");
         String[] cols = {"Time", "Mon", "Tue", "Wed", "Thu", "Fri"};
 
-        // Initialize the class-level model
         timetableModel = new DefaultTableModel(cols, 0);
+        // Initialize empty rows
         String[] times = {"08:00 - 08.55", "09:00 - 09.55", "10:00 - 10.55", "11:00 - 11.55", "12:00 - 12.55", "13:00 - 13.55", "14:00 - 14.55", "15:00 - 15.55", "16:00 - 16.55"};
         for (String time : times) timetableModel.addRow(new Object[]{time, "", "", "", "", ""});
 
-        JTable table = new JTable(timetableModel) { public boolean isCellEditable(int r, int c) { return false; } };
+        JTable table = new JTable(timetableModel) {
+            public boolean isCellEditable(int r, int c) { return false; }
+        };
         table.setRowHeight(40);
         table.setShowGrid(true);
         table.setGridColor(BORDER);
 
+        // Renderer to highlight occupied slots
         table.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
             @Override
             public Component getTableCellRendererComponent(JTable table, Object value,
                                                            boolean isSelected, boolean hasFocus, int row, int column) {
                 Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-
-                // Check if the cell has data (is not empty) and is not the "Time" column (column 0)
                 if (column > 0 && value != null && !value.toString().trim().isEmpty()) {
                     c.setBackground(TABLE_ORANGE);
-                    c.setForeground(Color.BLACK);
                 } else {
                     c.setBackground(Color.WHITE);
-                    c.setForeground(Color.BLACK);
                 }
                 return c;
             }
         });
 
-
-        outer.add(new JScrollPane(table), BorderLayout.CENTER);
-
-        outer.add(new JScrollPane(table), BorderLayout.CENTER);
+        JScrollPane scrollPane = new JScrollPane(table);
+        scrollPane.setBorder(null); // Clean look
+        outer.add(scrollPane, BorderLayout.CENTER);
         return outer;
     }
 
     private void loadTimetableData() {
-        if (cachedStudentId.isEmpty()) return; // Safety check
+        if (cachedStudentId == null || cachedStudentId.isEmpty()) return;
 
         String sql = "SELECT time_slot, day_of_week, course_code FROM timetable " +
                 "WHERE batch = (SELECT batch FROM students WHERE student_id = ?)";
@@ -341,23 +350,37 @@ public class DashboardApp extends JFrame {
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
                     String time = rs.getString("time_slot").trim();
-                    String day = rs.getString("day_of_week").trim();
+                    // 1. Convert to lowercase so it matches your getColumnForDay() cases
+                    String day = rs.getString("day_of_week").trim().toLowerCase();
                     String course = rs.getString("course_code");
 
                     for (int i = 0; i < timetableModel.getRowCount(); i++) {
                         if (timetableModel.getValueAt(i, 0).toString().trim().equalsIgnoreCase(time)) {
-                            int col = -1;
-                            if (day.equalsIgnoreCase("Mon")) col = 1;
-                            else if (day.equalsIgnoreCase("Tue")) col = 2;
-                            else if (day.equalsIgnoreCase("Wed")) col = 3;
-                            else if (day.equalsIgnoreCase("Thu")) col = 4;
-                            else if (day.equalsIgnoreCase("Fri")) col = 5;
-                            if (col != -1) timetableModel.setValueAt(course, i, col);
+                            int col = getColumnForDay(day);
+                            if (col != -1) {
+                                timetableModel.setValueAt(course, i, col);
+                            }
                         }
                     }
                 }
+                // 2. Refresh the table UI
+                timetableModel.fireTableDataChanged();
             }
-        } catch (SQLException e) { e.printStackTrace(); }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // Helper to keep code clean
+    private int getColumnForDay(String day) {
+        switch (day.toLowerCase()) {
+            case "mon": return 1;
+            case "tue": return 2;
+            case "wed": return 3;
+            case "thu": return 4;
+            case "fri": return 5;
+            default: return -1;
+        }
     }
 
     private JPanel coursesSummaryCard() {
