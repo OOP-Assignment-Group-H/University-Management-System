@@ -1,13 +1,9 @@
 import javax.swing.SwingUtilities;
-import view.SignUpForm;
+import view.MyFrame;
 
 public class Main {
 
     public static void main(String[] args) {
-
-        SwingUtilities.invokeLater(() -> {
-            new SignUpForm().setVisible(true);
-        });
-
+        SwingUtilities.invokeLater(() -> { new MyFrame().setVisible(true);});
     }
 }

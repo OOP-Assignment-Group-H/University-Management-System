@@ -4,8 +4,6 @@ import javax.swing.*;
 import javax.swing.border.AbstractBorder;
 import java.awt.*;
 import java.awt.geom.RoundRectangle2D;
-import java.util.Objects;
-import javax.swing.ImageIcon;
 
 public class SignUpForm extends JFrame {
 
@@ -34,11 +32,12 @@ public class SignUpForm extends JFrame {
 
         //==================== LEFT PANEL ====================
 
-// 1. Load the background image asset
-        ImageIcon originalIcon = new ImageIcon(
-                Objects.requireNonNull(getClass().getResource("/images/FCT.jpg"))
-        );
-        Image backgroundImage = originalIcon.getImage();
+// 1. Load the background image asset (file-based, not classpath-based)
+        java.io.File fctFile = new java.io.File("recources/images/FCT.jpg");
+        if (!fctFile.exists()) {
+            System.out.println("FCT.jpg NOT FOUND at: " + fctFile.getAbsolutePath());
+        }
+        Image backgroundImage = new ImageIcon(fctFile.getPath()).getImage();
 
 // 2. Create the panel with the dynamic background image
         JPanel leftPanel = new JPanel() {
@@ -55,22 +54,17 @@ public class SignUpForm extends JFrame {
 
 // ==================== UNIVERSITY LOGO ====================
 
-        try {
-            ImageIcon logoIcon = new ImageIcon(
-                    Objects.requireNonNull(getClass().getResource("/images/logo.png"))
-            );
-
-            // Scale the logo to a reasonable size
-            Image logoImg = logoIcon.getImage();
+        java.io.File logoFile = new java.io.File("recources/images/logo.png");
+        if (logoFile.exists()) {
+            Image logoImg = new ImageIcon(logoFile.getPath()).getImage();
             Image scaledLogo = logoImg.getScaledInstance(90, 90, Image.SCALE_SMOOTH);
             ImageIcon resizedLogo = new ImageIcon(scaledLogo);
 
             JLabel logoLabel = new JLabel(resizedLogo);
             logoLabel.setAlignmentX(Component.CENTER_ALIGNMENT); // Center horizontally
             leftPanel.add(logoLabel);
-
-        } catch (NullPointerException e) {
-            System.out.println("Logo image file not found. Check your file path!");
+        } else {
+            System.out.println("logo.png NOT FOUND at: " + logoFile.getAbsolutePath());
         }
 
 // Add a gap between the logo and the titles
@@ -220,6 +214,15 @@ public class SignUpForm extends JFrame {
         loginLabel.setFont(new Font("Arial", Font.BOLD, 14));
         rightPanel.add(loginLabel);
 
+        // Click "Login" to go back to the Login window
+        loginLabel.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseClicked(java.awt.event.MouseEvent e) {
+                SwingUtilities.invokeLater(() -> new MyFrame().setVisible(true));
+                dispose();
+            }
+        });
+
         //---------------- Add Panels ----------------
 
         mainPanel.add(leftPanel);
@@ -269,7 +272,7 @@ public class SignUpForm extends JFrame {
         }
 
         // Role validation
-        if (role.equals("Select Role")) {
+        if (role.isEmpty()) {
 
             JOptionPane.showMessageDialog(
                     this,
@@ -316,21 +319,46 @@ public class SignUpForm extends JFrame {
             return;
         }
 
-        JOptionPane.showMessageDialog(
-                this,
-                "Registration Successful!",
-                "Success",
-                JOptionPane.INFORMATION_MESSAGE
-        );
+        // ---------------- Save to database ----------------
+        String sql = "INSERT INTO users (full_name, username, email, password, role) VALUES (?, ?, ?, ?, ?)";
 
-        // Clear fields
+        try (java.sql.Connection conn = DB.DBConnection.getConnection();
+             java.sql.PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-        fullNameField.setText("");
-        usernameField.setText("");
-        emailField.setText("");
-        passwordField.setText("");
-        confirmPasswordField.setText("");
-        roleGroup.clearSelection();
+            stmt.setString(1, fullName);
+            stmt.setString(2, username);
+            stmt.setString(3, email);
+            stmt.setString(4, password);
+            stmt.setString(5, role.toLowerCase());
+
+            stmt.executeUpdate();
+
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Registration Successful! Please log in with your new account.",
+                    "Success",
+                    JOptionPane.INFORMATION_MESSAGE
+            );
+
+            // Go to Login screen
+            SwingUtilities.invokeLater(() -> new MyFrame().setVisible(true));
+            dispose();
+
+        } catch (java.sql.SQLIntegrityConstraintViolationException dup) {
+            JOptionPane.showMessageDialog(
+                    this,
+                    "That username or email is already registered.",
+                    "Registration Failed",
+                    JOptionPane.ERROR_MESSAGE
+            );
+        } catch (java.sql.SQLException ex) {
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Database error: " + ex.getMessage(),
+                    "Registration Failed",
+                    JOptionPane.ERROR_MESSAGE
+            );
+        }
     }
 
     // Rounded Border Class
